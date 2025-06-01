@@ -11,8 +11,15 @@ const GeneralInfo = () => {
   const [isHidden, setIsHidden] = useState(false);
   const [school, setSchool] = useState("");
   const [program, setProgram] = useState("");
-  const [showExperience, setShowExperience] = useState("");
+  const [showExperience, setShowExperience] = useState(false);
+  const [experiences, setExperiences] = useState([]);
   const [graduationDate, setGraduationDate] = useState("");
+  const [role, setRole] = useState("");
+  const [company, setCompany] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [responsibilities, setResponsibilities] = useState([]);
+  const [isCurrent, setIsCurrent] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -60,13 +67,25 @@ const GeneralInfo = () => {
           graduationDate={graduationDate}
           setGraduationDate={setGraduationDate}
         />
-        {showExperience && <Experience />}
+        {showExperience && (
+          <>
+            <Experience
+              role={role}
+              setRole={setRole}
+              isCurrent={isCurrent}
+              setIsCurrent={setIsCurrent}
+            />
+            <button onClick={() => setShowExperience(false)}>Cancel</button>
+          </>
+        )}
 
-        <div>
-          <button onClick={() => setShowExperience(true)}>
-            Add Experience
-          </button>
-        </div>
+        {!showExperience && (
+          <div>
+            <button onClick={() => setShowExperience(true)}>
+              Add Experience
+            </button>
+          </div>
+        )}
 
         <button type="submit">Submit</button>
       </form>
