@@ -6,6 +6,7 @@ const Display = ({
   program,
   graduationDate,
   setIsHidden,
+  experiences,
 }) => {
   return (
     <>
@@ -17,6 +18,21 @@ const Display = ({
       <p>{school}</p>
       <p>{program}</p>
       <p>{graduationDate}</p>
+      {experiences.length > 0 &&
+        experiences.map((experience) => {
+          return (
+            <div>
+              <p>{experience.role}</p>
+              <p>{experience.company}</p>
+              <p>{experience.startDate}</p>
+              {experience.isCurrent ? (
+                <p>"Present"</p>
+              ) : (
+                <p>{experience.endDate}</p>
+              )}
+            </div>
+          );
+        })}
     </>
   );
 };
