@@ -12,7 +12,24 @@ const GeneralInfo = () => {
   const [school, setSchool] = useState("");
   const [program, setProgram] = useState("");
   const [showExperience, setShowExperience] = useState(false);
-  const [experiences, setExperiences] = useState([]);
+  const [experiences, setExperiences] = useState([
+    {
+      role: "",
+      company: "",
+      startDate: "",
+      endDate: "",
+      responsibilities: [],
+      isCurrent: false,
+    },
+    {
+      role: "",
+      company: "",
+      startDate: "",
+      endDate: "",
+      responsibilities: [],
+      isCurrent: false,
+    },
+  ]);
   const [graduationDate, setGraduationDate] = useState("");
 
   const handleSubmit = (e) => {
@@ -60,21 +77,6 @@ const GeneralInfo = () => {
           graduationDate={graduationDate}
           setGraduationDate={setGraduationDate}
         />
-        {showExperience && (
-          <>
-            <h3>Experience #1</h3>
-            <Experience
-              setExperiences={setExperiences}
-              experiences={experiences}
-            />
-            <h3>Experience #2</h3>
-            <Experience
-              setExperiences={setExperiences}
-              experiences={experiences}
-            />
-            <button onClick={() => setShowExperience(false)}>Cancel</button>
-          </>
-        )}
 
         {!showExperience && (
           <div>
@@ -82,6 +84,24 @@ const GeneralInfo = () => {
               Add Experience
             </button>
           </div>
+        )}
+
+        {showExperience && (
+          <>
+            {experiences.map((experience, index) => {
+              return (
+                <>
+                  <h3>Experience {index + 1}</h3>
+                  <Experience
+                    setExperiences={setExperiences}
+                    experience={experiences[index]}
+                    key={index}
+                  />
+                </>
+              );
+            })}
+            <button onClick={() => setShowExperience(false)}>Cancel</button>
+          </>
         )}
 
         <button type="submit">Submit</button>

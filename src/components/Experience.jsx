@@ -1,78 +1,91 @@
 import { useState } from "react";
 import InputField from "./InputField";
 
-const Experience = ({ experiences, setExperiences }) => {
-  const [role, setRole] = useState("");
-  const [company, setCompany] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [responsibility1, setResponsibility1] = useState("");
-  const [responsibility2, setResponsibility2] = useState("");
-  const [isCurrent, setIsCurrent] = useState(false);
+const Experience = ({
+  experiences,
+  setExperiences,
+  experience,
+  onExperienceChange,
+}) => {
+  const handleInputChange = (field, value) => {
+    onExperienceChange({
+      ...experience,
+      [field]: value,
+    });
+  };
 
   return (
     <div>
-      Experience
       <InputField
         type="text"
         name="role"
-        onChange={(e) => setRole(e.target.value)}
-        value={role}
-        id={role}
+        onChange={(e) => handleInputChange("role", e.target.value)}
+        value={experience.role}
+        id={experience.role}
         label="Role"
       />
       <InputField
         type="text"
         name="company"
-        onChange={(e) => setCompany(e.target.value)}
-        value={company}
-        id={company}
+        onChange={(e) => handleInputChange("company", e.target.value)}
+        value={experience.company}
+        id={experience.company}
         label="Company"
       />
       <InputField
         type="month"
         name="start-date"
-        onChange={(e) => setStartDate(e.target.value)}
-        value={startDate}
-        id={startDate}
+        onChange={(e) => handleInputChange("startDate", e.target.value)}
+        value={experience.startDate}
+        id={experience.startDate}
         label="Start Date"
       />
       <InputField
         type="checkbox"
         label="Is current"
         name="current"
-        value={isCurrent}
+        value={experience.isCurrent}
         id="current"
         onChange={(e) => {
-          setIsCurrent(e.target.checked);
+          handleInputChange("isCurrent", e.target.checked);
         }}
       />
-      {!isCurrent && (
+      {!experience.isCurrent && (
         <InputField
           type="month"
           label="End Date"
           name="end-date"
-          value={endDate}
-          id={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
+          value={experience.endDate}
+          id={experience.endDate}
+          onChange={(e) => handleInputChange("endDate", e.target.value)}
         />
       )}
       <p>Responsibilities</p>
       <InputField
         type="text"
         name="responsibility-1"
-        value={responsibility1}
-        id={responsibility1}
+        value={experience.responsibilities[0]}
+        id={experience.responsibilities[0]}
         label="Responsibility 1"
-        onChange={(e) => setResponsibility1(e.target.value)}
+        onChange={(e) =>
+          handleInputChange("responsibilities", [
+            ...experience.responsibilities,
+            e.target.value,
+          ])
+        }
       />
       <InputField
         type="text"
         name="responsibility-2"
-        value={responsibility2}
-        id={responsibility2}
+        value={experience.responsibilities[1]}
+        id={experience.responsibilities[1]}
         label="Responsibility 2"
-        onChange={(e) => setResponsibility2(e.target.value)}
+        onChange={(e) =>
+          handleInputChange("responsibilities", [
+            ...experience.responsibilities,
+            e.target.value,
+          ])
+        }
       />
       <button
         onClick={(e) => {
