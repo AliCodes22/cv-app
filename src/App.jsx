@@ -1,4 +1,5 @@
 import GeneralInfo from "./components/GeneralInfo";
+import "./styles/styles.css";
 
 function App() {
   return (

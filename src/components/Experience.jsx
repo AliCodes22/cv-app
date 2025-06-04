@@ -1,4 +1,3 @@
-import { useState } from "react";
 import InputField from "./InputField";
 
 const Experience = ({
@@ -6,13 +5,19 @@ const Experience = ({
   setExperiences,
   experience,
   onExperienceChange,
+  index,
 }) => {
   const handleInputChange = (field, value) => {
-    onExperienceChange({
+    const updatedExp = {
       ...experience,
       [field]: value,
-    });
+    };
+
+    onExperienceChange(index, updatedExp);
   };
+
+  const { role, company, startDate, endDate, responsibilities, isCurrent } =
+    experience;
 
   return (
     <div>
@@ -67,25 +72,27 @@ const Experience = ({
         value={experience.responsibilities[0]}
         id={experience.responsibilities[0]}
         label="Responsibility 1"
-        onChange={(e) =>
-          handleInputChange("responsibilities", [
-            ...experience.responsibilities,
-            e.target.value,
-          ])
-        }
+        onChange={(e) => {
+          const newArr = [...responsibilities];
+
+          newArr[0] = e.target.value;
+
+          handleInputChange("responsibilities", newArr);
+        }}
       />
       <InputField
         type="text"
         name="responsibility-2"
-        value={experience.responsibilities[1]}
-        id={experience.responsibilities[1]}
+        value={responsibilities[1]}
+        id={responsibilities[1]}
         label="Responsibility 2"
-        onChange={(e) =>
-          handleInputChange("responsibilities", [
-            ...experience.responsibilities,
-            e.target.value,
-          ])
-        }
+        onChange={(e) => {
+          const newArr = [...responsibilities];
+
+          newArr[1] = e.target.value;
+
+          handleInputChange("responsibilities", newArr);
+        }}
       />
       <button
         onClick={(e) => {
@@ -93,12 +100,12 @@ const Experience = ({
 
           const tasks = [];
 
-          if (responsibility1.trim()) {
-            tasks.push(responsibility1.trim());
+          if (experience.responsibilities[0].trim()) {
+            tasks.push(experience.responsibilities[0].trim());
           }
 
-          if (responsibility2.trim()) {
-            tasks.push(responsibility2.trim());
+          if (experience.responsibilities[1].trim()) {
+            tasks.push(experience.responsibilities[1]);
           }
 
           const updatedExperience = {
@@ -117,7 +124,7 @@ const Experience = ({
           }
         }}
       >
-        Submit
+        Add
       </button>
     </div>
   );
